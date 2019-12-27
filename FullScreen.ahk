@@ -13,12 +13,9 @@ Version = 1.0
 
 ; If action is strictly stop, do so and quit
 if (Action == "stop") {
-	;WinClose, %WindowID%
 	PostMessage, 0x112, 0xF060,,, %WindowID%
 	Title =
 	IniWrite, %Title%, %INI%, CurrentWindow, WindowID
-	;Send, {F11}
-	;Send, !{f4} ; Simulates the keypress alt+f4
 	ExitApp
 }
 
@@ -27,18 +24,15 @@ if (WindowID != "") {
 	PostMessage, 0x112, 0xF060,,, %WindowID%
 }
 
+; Run the passed target
 Run, %Target%
-
+; Wait until its active
 WinWaitActive, %Title%
+; Set it to always on top
 Winset, Alwaysontop, , A
-WinGet, WindowID, ID, %Title%
+; Write the window title to ini file for later use
 IniWrite, %Title%, %INI%, CurrentWindow, WindowID
+; Make full screen (Chrome)
 Send, {F11}
-Sleep 10
-;Send, {F11}
-;Send, !{f4} ; Simulates the keypress alt+f4
-;ExitApp
-
-;PostMessage, 0x112, 0xF060,,, %Title%
-;WinClose, %WindowID%
+; Exit this script
 ExitApp
