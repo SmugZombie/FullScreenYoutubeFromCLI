@@ -1,4 +1,4 @@
-# FullScreenYoutubeFromCLI - Github.com/SmugZombie
+; FullScreenYoutubeFromCLI - Github.com/SmugZombie
 #SingleInstance, Force
 #NoTrayIcon
 SetTitleMatchMode, RegEx
@@ -9,7 +9,13 @@ Title := Title . "$"
 Target = %3%
 INI := A_ScriptDir . "\FullScreenYouTube.ini"
 IniRead, WindowID, %INI%, CurrentWindow, WindowID,
-Version = 1.0
+Version = 1.1
+
+; If action is strictly stop, do so and quit
+if (Action == "pause" || Action == "unpause") {
+	Send {Media_Play_Pause}
+	ExitApp
+}
 
 ; If action is strictly stop, do so and quit
 if (Action == "stop") {
